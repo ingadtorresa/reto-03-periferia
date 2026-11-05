@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agente de OC</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="barra">
+    <div>
+      <h1>Órdenes de compra</h1>
+      <p id="estado" class="tenue">Conectando…</p>
+    </div>
+    <div class="metricas" aria-live="polite">
+      <span id="metrica" class="tenue"></span>
+      <button id="nueva" type="button" class="secundario">Nueva sesión</button>
+    </div>
+  </header>
+
+  <main id="chat" class="chat" aria-live="polite"></main>
+
+  <section id="atajos" class="atajos" aria-label="Casos de prueba">
+    <button type="button" data-caso="sol-001">sol-001</button>
+    <button type="button" data-caso="sol-002">sol-002</button>
+    <button type="button" data-caso="sol-003">sol-003</button>
+    <button type="button" data-caso="sol-004">sol-004</button>
+    <button type="button" data-caso="sol-005">sol-005</button>
+    <button type="button" data-caso="sol-006">sol-006</button>
+  </section>
+
+  <form id="formulario" class="formulario">
+    <input id="clave" type="password" placeholder="Clave de acceso" autocomplete="off" aria-label="Clave de acceso" hidden>
+    <textarea id="mensaje" rows="2" maxlength="4000" placeholder='Escribe, por ejemplo: Procesa la solicitud "sol-004"' aria-label="Mensaje"></textarea>
+    <button id="enviar" type="submit">Enviar</button>
+  </form>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
