@@ -6,8 +6,11 @@ El planteamiento de la solución está en [SOLUCION.md](SOLUCION.md).
 
 ## Link de prueba
 
-- **URL:** PENDIENTE_URL
-- **Clave de acceso:** PENDIENTE_CLAVE
+- **URL:** https://reto-03-periferia-production.up.railway.app
+- **Clave de acceso:** `7b8d6a042eb01248`
+- **Documentación de la API:** https://reto-03-periferia-production.up.railway.app/docs
+
+El servicio guarda `out/` y las sesiones sin persistencia: al reiniciarse, vuelve a empezar desde la OC 4500000001.
 
 Prueba sugerida en una sesión nueva:
 
