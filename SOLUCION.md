@@ -196,6 +196,7 @@ La decisión entre tolerar con marca o rechazar es de la dirección. El agente y
 | Ciclo propio | Framework de agentes o Tool Runner del SDK | La confirmación necesita intervenir antes de cada herramienta, y así el ciclo se prueba sin modelo |
 | Respuesta HTTP completa | Streaming | El PRD lo deja opcional. Se pierde ver los pasos en vivo, pero el API y el front quedan más simples y menos propensos a fallar en 2 horas |
 | Persistencia en archivos y sesiones en memoria | Base de datos | El PRD lo pide así. Al reiniciar se pierde la conversación; una confirmación pendiente nunca se da por hecha |
+| Desplegar en Railway | Render gratis, Vercel, Fly.io o Azure | Es un proceso Node continuo y simple de desplegar desde GitHub. Render gratis se suspende por inactividad, y Vercel exigiría rediseñar las sesiones en memoria y la escritura en `out/`. El costo es que cada despliegue borra `out/`, así que solo sirve para el reto |
 
 ### Dependencias
 
@@ -255,6 +256,7 @@ Usé **Claude Code** (modelo Claude Opus 5.5) durante toda la construcción.
 | Propuesta | Por qué la descarté |
 |---|---|
 | Usar Bun como runtime | Elegí Node 20+ porque es más estándar para mí |
+| Desplegar en Vercel, Render o Fly.io | Comparé esas opciones con el asistente, que también recomendó Railway. Lo elegí por simplicidad y porque ya lo conocía |
 | Aprobar cada orden en un endpoint separado | Contradice el PRD: `sol-001` debe crearse sin intervención, y la confirmación va en el siguiente mensaje |
 | Auditoría con cadena de hashes | Sobraba para el alcance; el PRD pide `control.csv` y `log.jsonl` |
 | Streaming de respuestas | Es opcional; preferí dedicar el tiempo a controles y pruebas |
