@@ -99,6 +99,12 @@ describe("reglas sin caso propio en los fixtures", () => {
     expect(codigos((await validar(d, "sol-001")).confirmaciones)).toEqual(["RC5"])
   })
 
+  it("EX1 pide confirmar códigos de IVA o de pago que no están en los maestros", async () => {
+    const d = proyectoTemporal()
+    ajustarJson(rutaCaso(d, "sol-001", "solicitud.json"), (s) => { s.indicador_iva = "C9"; s.condiciones_pago = "Z999" })
+    expect(codigos((await validar(d, "sol-001")).confirmaciones)).toEqual(["EX1", "EX1"])
+  })
+
   it("RC7 deriva las condiciones de pago sin pedir confirmación", async () => {
     const d = proyectoTemporal()
     ajustarJson(rutaCaso(d, "sol-001", "solicitud.json"), (s) => { delete s.condiciones_pago })

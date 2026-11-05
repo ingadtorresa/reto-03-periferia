@@ -205,6 +205,17 @@ describe("API", () => {
     const r = await app(proyectoTemporal()).request("/")
     expect(r.status).toBe(200)
     expect(r.headers.get("content-security-policy")).toContain("script-src 'self'")
+    expect(r.headers.get("content-security-policy")).not.toContain("unsafe-inline")
+  })
+
+  it("publica el contrato OpenAPI con todas las rutas y solo relaja la CSP en /docs", async () => {
+    const a = app(proyectoTemporal())
+    const especificacion = (await (await a.request("/openapi.json")).json()) as { paths: Record<string, unknown> }
+    expect(Object.keys(especificacion.paths).sort()).toEqual(["/api/chat", "/api/control", "/api/health", "/api/sessions/{id}"])
+    const docs = await a.request("/docs")
+    expect(docs.status).toBe(200)
+    expect(docs.headers.get("content-security-policy")).toContain("style-src 'self' 'unsafe-inline'")
+    expect((await a.request("/openapi.json")).headers.get("content-security-policy")).not.toContain("unsafe-inline")
   })
 })
 

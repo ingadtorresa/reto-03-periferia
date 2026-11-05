@@ -7,6 +7,7 @@ import { secureHeaders } from "hono/secure-headers"
 import { z } from "zod"
 import { procesarTurno, type DependenciasCiclo } from "./agent/ciclo.ts"
 import { Sesiones } from "./agent/sesiones.ts"
+import { registrarDocs } from "./docs.ts"
 import { resumenControl } from "./oc/registros.ts"
 
 export type ConfigApp = DependenciasCiclo & { accessCode?: string; peticionesPorMinuto: number }
@@ -49,18 +50,23 @@ export function crearApp(config: ConfigApp): Hono {
   const app = new Hono()
   const sesiones = new Sesiones()
 
-  app.use(secureHeaders({
-    contentSecurityPolicy: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'"],
-      imgSrc: ["'self'"],
-      connectSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      baseUri: ["'none'"],
-      frameAncestors: ["'none'"],
-    },
-  }))
+  const politica = {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'"],
+    styleSrc: ["'self'"],
+    imgSrc: ["'self'"],
+    connectSrc: ["'self'"],
+    objectSrc: ["'none'"],
+    baseUri: ["'none'"],
+    frameAncestors: ["'none'"],
+  }
+  const cabeceras = secureHeaders({ contentSecurityPolicy: politica })
+  // Swagger UI usa estilos en línea e imágenes data:. La excepción solo aplica en /docs, que no recibe contenido de documentos.
+  const cabecerasDocs = secureHeaders({
+    contentSecurityPolicy: { ...politica, styleSrc: ["'self'", "'unsafe-inline'"], imgSrc: ["'self'", "data:"] },
+  })
+  app.use((c, next) => (c.req.path.startsWith("/docs") ? cabecerasDocs(c, next) : cabeceras(c, next)))
+  registrarDocs(app)
 
   app.onError((error, c) => {
     console.error("Error no controlado en la API", error)

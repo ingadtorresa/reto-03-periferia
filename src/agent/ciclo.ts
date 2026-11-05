@@ -34,12 +34,12 @@ function casoDe(args: unknown): string {
 function resumir(nombre: string, resultado: Resultado): string {
   if (!resultado.ok) return resultado.error
   const data = resultado.data as Registro
-  const codigos = (lista: unknown) => (lista as { codigo: string }[]).map((h) => h.codigo).join(", ") || "ninguna"
+  const codigos = (lista: unknown) => (lista as { codigo: string }[]).map((h) => h.codigo).join(", ")
   switch (nombre) {
     case "oc_leer_paquete":
       return `Paquete leído. Faltantes: ${(data.faltantes as string[]).join(", ") || "ninguno"}`
     case "oc_validar":
-      return `apta=${String(data.apta)} · bloqueos: ${codigos(data.bloqueos)} · confirmaciones: ${codigos(data.confirmaciones)} · retroactiva=${String(data.retroactiva)}`
+      return `apta=${String(data.apta)} · bloqueos: ${codigos(data.bloqueos) || "ninguno"} · confirmaciones: ${codigos(data.confirmaciones) || "ninguna"} · retroactiva=${String(data.retroactiva)}`
     case "oc_construir_payload":
       return `Payload construido. Trazabilidad: ${String(data.ruta_trazabilidad)}`
     case "oc_generar_evidencia":

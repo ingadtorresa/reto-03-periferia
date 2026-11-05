@@ -215,6 +215,7 @@ async function enviar(texto) {
       return
     }
     escribirAlmacen("clave", campoClave.value.trim())
+    campoClave.hidden = true
     mostrarAgente({ texto: datos.reply, toolCalls: datos.toolCalls, needsConfirmation: datos.needsConfirmation }, true)
     actualizarMetrica()
   } catch {
