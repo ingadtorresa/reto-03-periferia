@@ -101,3 +101,8 @@ modulo/                         Agente empaquetado como módulo reutilizable
 fixtures/                       Entregados por Periferia, sin modificar
 demo.ts                         Verificación sin modelo
 ```
+
+## Expresiones de gratitud 🎁
+
+* Agradezco a Periferia IT Group por su interés en mi perfil para el cargo de AI Software Engineer 🤓
+* Me encantaría recibir su retroalimentación en mi correo (ingadtorresa@gmail.com). Sus opiniones son muy importantes para mi superación diaria, y también podemos tomarnos un café ☕ 🤗
