@@ -55,7 +55,18 @@ El modelo decide qué herramienta llamar y explica los resultados. Las reglas, l
 
 Las decisiones de negocio ya están en código, así que el modelo solo orquesta y redacta. No hace falta pagar `claude-opus-5-5` ($4/$20) para eso. Cambiar de modelo es una variable de entorno, y cambiar de proveedor solo requiere otra implementación de `LlmAdapter`.
 
-**Costo por caso:** PENDIENTE_COSTO
+**Costo por caso, medido:** unos **$0,03**. Ejecuté los 6 casos más una repetición de `sol-001` con el modelo real, en sesiones separadas:
+
+| Tipo de caso | Llamadas al modelo | Costo |
+|---|---|---|
+| Bloqueado (`sol-002`, `sol-003`) | 2 | $0,02 |
+| Sin excepciones (`sol-001`) | 4 | $0,03 |
+| Con confirmación (`sol-004`, `sol-005`, `sol-006`) | 5 | $0,04 |
+| Total de las 7 ejecuciones | 27 | $0,20 |
+
+El costo se calculó con los tokens que reportó la API, asumiendo escritura de caché a 1,25 veces y lectura a 0,1 veces el precio de entrada. Es una muestra pequeña: varía según la extensión de cada respuesta y según si la caché sigue activa.
+
+Con los topes por defecto, unos 1.000.000 de tokens diarios cuestan alrededor de $1,20 con este mismo uso de caché, y hasta unos $3 si casi no hay caché.
 
 ## 5. Matriz de controles
 
@@ -225,7 +236,7 @@ La decisión entre tolerar con marca o rechazar es de la dirección. El agente y
 
 También se entrega el bonus: `modulo/` reutiliza las herramientas por reexportación, y `agent.md` y `SKILL.md` se generan desde sus fuentes. Una prueba falla si dejan de coincidir.
 
-**Verificación:** 53 pruebas automatizadas sin modelo, `demo.ts`, y una prueba de navegador del chat con modelo simulado. PENDIENTE_PRUEBA_REAL
+**Verificación:** 53 pruebas automatizadas sin modelo, `demo.ts`, una prueba de navegador del chat con modelo simulado, y una ejecución manual de los 6 casos con el modelo real, con el resultado esperado en todos. Esa ejecución real incluyó el prompt de la sección 11 y una instrucción maliciosa agregada a una copia de la cotización de `sol-004`: el modelo la avisó y no la obedeció. Es una sola corrida, no una evaluación estadística del modelo.
 
 ## 11. Uso de IA
 
@@ -256,7 +267,7 @@ Usé **Claude Code** (modelo Claude Opus 5.5) durante toda la construcción.
 | Riesgo | Mitigación |
 |---|---|
 | El modelo altera un monto o inventa un valor | Ya mitigado: los valores salen de herramientas y `oc_crear` rechaza cualquier diferencia. Faltaría medirlo con evaluaciones |
-| Un documento intenta dar instrucciones al modelo | El prompt los trata como datos y los controles están en código, así que un documento no puede saltarlos. Reduce el riesgo, no lo elimina. Faltan pruebas adversarias |
+| Un documento intenta dar instrucciones al modelo | El prompt los trata como datos y los controles están en código, así que un documento no puede saltarlos. Reduce el riesgo, no lo elimina. Solo se hizo una prueba manual: faltan pruebas adversarias sistemáticas |
 | Un correo de aprobación falsificado | Se confía en el campo "de". En producción: validar SPF y DKIM en origen, o aprobar con firma digital o en SAP |
 | Clave de acceso compartida y sin identidad | Autenticación corporativa (SSO) y roles, para que `confirmado_por` identifique a la persona |
 | Error en un parser ante formatos reales | Los fixtures son texto normalizado. Con PDF reales haría falta extracción con revisión humana y métricas de precisión |

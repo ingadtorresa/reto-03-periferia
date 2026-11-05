@@ -35,8 +35,8 @@ npm run dev             # front y backend en http://localhost:3000
 | `ACCESS_CODE` | No | | Si se define, el chat exige esta clave |
 | `PORT` | No | `3000` | Puerto |
 | `MAX_ITERACIONES` | No | `25` | Tope de pasos por turno |
-| `TOKENS_POR_SESION` | No | `60000` | Tope de tokens por sesión |
-| `TOKENS_POR_DIA` | No | `400000` | Tope global diario |
+| `TOKENS_POR_SESION` | No | `200000` | Tope de tokens por sesión, incluida la caché |
+| `TOKENS_POR_DIA` | No | `1000000` | Tope global diario, incluida la caché |
 | `PETICIONES_POR_MINUTO` | No | `30` | Tope global de mensajes al chat |
 | `LLM_TIMEOUT_MS` | No | `90000` | Tiempo máximo de respuesta del modelo |
 

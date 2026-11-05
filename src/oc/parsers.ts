@@ -85,7 +85,9 @@ export function textoBreveSap(descripcion: string): string {
   if (texto.length <= 40) return texto
   const corte = texto.slice(0, 40)
   const espacio = corte.lastIndexOf(" ")
-  return (espacio >= 20 ? corte.slice(0, espacio) : corte).replace(/[\s,;:.-]+$/, "")
+  return (espacio >= 20 ? corte.slice(0, espacio) : corte)
+    .replace(/(\s+(de|del|la|el|los|las|y|o|a|en|con|para|por))+$/i, "")
+    .replace(/[\s,;:.-]+$/, "")
 }
 
 /** La solicitud no trae unidad: se infiere de la descripción y por defecto es "UN". */

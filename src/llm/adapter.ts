@@ -14,7 +14,8 @@ export type RespuestaLlm = {
   texto: string
   llamadas: LlamadaHerramienta[]
   fin: "fin" | "herramientas" | "truncado" | "rechazo"
-  uso: { entrada: number; salida: number }
+  /** `entrada` es el total, incluida la caché; los dos campos opcionales la desglosan para estimar costos. */
+  uso: { entrada: number; salida: number; cacheEscrita?: number; cacheLeida?: number }
   crudo?: unknown
 }
 

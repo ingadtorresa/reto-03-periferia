@@ -27,8 +27,8 @@ const app = crearApp({
   directory,
   systemPrompt: cargarSystemPrompt(directory),
   maxIteraciones: entero("MAX_ITERACIONES", 25),
-  tokensPorSesion: entero("TOKENS_POR_SESION", 60_000),
-  presupuesto: new PresupuestoDiario(entero("TOKENS_POR_DIA", 400_000)),
+  tokensPorSesion: entero("TOKENS_POR_SESION", 200_000),
+  presupuesto: new PresupuestoDiario(entero("TOKENS_POR_DIA", 1_000_000)),
   accessCode: process.env.ACCESS_CODE || undefined,
   peticionesPorMinuto: entero("PETICIONES_POR_MINUTO", 30),
 })

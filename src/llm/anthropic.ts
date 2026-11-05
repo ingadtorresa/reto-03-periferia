@@ -43,6 +43,13 @@ function aFin(razon: string | null): RespuestaLlm["fin"] {
   return "fin"
 }
 
+/** `input_tokens` excluye la caché: sin sumarla, los topes de tokens subestimarían el consumo real. */
+function aUso(uso: Anthropic.Usage): RespuestaLlm["uso"] {
+  const cacheEscrita = uso.cache_creation_input_tokens ?? 0
+  const cacheLeida = uso.cache_read_input_tokens ?? 0
+  return { entrada: uso.input_tokens + cacheEscrita + cacheLeida, salida: uso.output_tokens, cacheEscrita, cacheLeida }
+}
+
 export class AnthropicAdapter implements LlmAdapter {
   readonly proveedor = "anthropic"
   private readonly cliente: Anthropic | null
@@ -79,7 +86,7 @@ export class AnthropicAdapter implements LlmAdapter {
         texto: respuesta.content.flatMap((b) => (b.type === "text" ? [b.text] : [])).join(""),
         llamadas: respuesta.content.flatMap((b) => (b.type === "tool_use" ? [{ id: b.id, nombre: b.name, args: b.input }] : [])),
         fin: aFin(respuesta.stop_reason),
-        uso: { entrada: respuesta.usage.input_tokens, salida: respuesta.usage.output_tokens },
+        uso: aUso(respuesta.usage),
         crudo: respuesta.content,
       }
     } catch (error) {

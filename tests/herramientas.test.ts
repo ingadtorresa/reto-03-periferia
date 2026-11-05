@@ -39,6 +39,7 @@ describe("parsers", () => {
 
   it("recorta el texto breve a 40 caracteres e infiere la unidad", () => {
     expect(textoBreveSap("Renovación licencias antivirus corporativo 120 puestos, vigencia 12 meses").length).toBeLessThanOrEqual(40)
+    expect(textoBreveSap("Bolsa de 100 horas de arquitectura de nube para migración")).toBe("Bolsa de 100 horas de arquitectura")
     expect(inferirUnidad("Bolsa de 100 horas de arquitectura")).toBe("H")
     expect(inferirUnidad("Licencias, vigencia 12 meses")).toBe("UN")
   })
