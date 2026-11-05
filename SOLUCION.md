@@ -254,6 +254,7 @@ Usé **Claude Code** (modelo Claude Opus 5.5) durante toda la construcción.
 
 | Propuesta | Por qué la descarté |
 |---|---|
+| Usar Bun como runtime | Elegí Node 20+ porque es más estándar para mí |
 | Aprobar cada orden en un endpoint separado | Contradice el PRD: `sol-001` debe crearse sin intervención, y la confirmación va en el siguiente mensaje |
 | Auditoría con cadena de hashes | Sobraba para el alcance; el PRD pide `control.csv` y `log.jsonl` |
 | Streaming de respuestas | Es opcional; preferí dedicar el tiempo a controles y pruebas |
